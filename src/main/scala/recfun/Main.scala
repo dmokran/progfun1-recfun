@@ -21,7 +21,15 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = ???
+    def balance(chars: List[Char]): Boolean = {
+      def nextParen(ch: List[Char], cnt: Int): Int = {
+        if (ch.isEmpty) cnt
+        else if (ch.head == ')')  nextParen(ch.tail, cnt-1)
+        else if ((ch.head == '(') && (cnt >= 0)) nextParen(ch.tail, cnt+1)
+        else nextParen(ch.tail, cnt)
+      }
+      if (nextParen(chars, 0) == 0) true else false
+    }
   
   /**
    * Exercise 3
