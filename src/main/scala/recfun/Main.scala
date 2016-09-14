@@ -8,6 +8,8 @@ object Main {
         print(pascal(col, row) + " ")
       println()
     }
+    println("Counting Change")
+    print(countChange(3, List(2,3,1)))
   }
 
   /**
@@ -34,5 +36,18 @@ object Main {
   /**
    * Exercise 3
    */
-    def countChange(money: Int, coins: List[Int]): Int = ???
+    def countChange(money: Int, coins: List[Int]): Int = {
+      //println(money)
+      //println(coins)
+      var cnt: Int = 0
+      def seqCnt(sDepth: Int, elem: List[Int]): Int = {
+        if (sDepth == 0) println()
+        else {
+          sDepth -= 1
+          print(elem.head)
+        }
+      }
+      seqCnt(coins.length, coins.sorted)
+      return 0
+    }
   }
