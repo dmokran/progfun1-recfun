@@ -26,4 +26,11 @@ class BalanceSuite extends FunSuite {
     assert(!balance("())(".toList))
   }
 
+  test("balance: 'many open parens first") {
+    assert(balance("(((((a+b)*(d)))))".toList))
+  }
+
+  test("balance: 'too many closed parens inside the exp but count matches") {
+    assert(!balance("((:-)2) #)---(and)K!(".toList))
+  }
 }
