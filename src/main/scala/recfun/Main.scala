@@ -37,17 +37,18 @@ object Main {
    * Exercise 3
    */
     def countChange(money: Int, coins: List[Int]): Int = {
-      //println(money)
-      //println(coins)
-      var cnt: Int = 0
-      def seqCnt(sDepth: Int, elem: List[Int]): Int = {
-        if (sDepth == 0) println()
-        else {
-          sDepth -= 1
-          print(elem.head)
+      def seqCnt(sDepth: Int, elem: List[Int], seqStr: String): Unit = {
+        if ((sDepth == 0) && (elem.isEmpty)) println(seqStr)
+        else if ((sDepth == 0) && (!elem.isEmpty)) {
+          println(seqStr + elem.head.toString)
+          seqCnt(sDepth+1, elem.tail, seqStr)
+        } else if ((sDepth > 0) && (!elem.isEmpty)){
+          seqCnt(sDepth-1, elem, seqStr + elem.head.toString)
+        } else {
+          println("sdepth > 0, but list empty")
         }
       }
-      seqCnt(coins.length, coins.sorted)
+      seqCnt(coins.length-1, coins.sorted, "")
       return 0
     }
   }
