@@ -37,24 +37,19 @@ object Main {
    * Exercise 3
    */
     def countChange(money: Int, coins: List[Int]): Int = {
-      var count:Int = 0
-      def seqCnt(money: Int, elem: List[Int], currSum: Int): Unit = {
-        if (elem.isEmpty) {
-          count = count
-        }
-        else if (currSum == money) {
-          count = count + 1
-        }
+      var count: Int = 0
+      val sCoins = coins.sorted
+      def seqCnt(elem: List[Int], currSum: Int): Unit = {
+        if (currSum == money) count += 1
         else if (currSum < money) {
-          for (j <- 0 until elem.length) {
-            seqCnt(money, elem.slice(j, elem.length), currSum + elem(j))
+          for (j <- elem.indices) {
+            seqCnt(elem.slice(j, elem.length), currSum + elem(j))
           }
         }
       }
-      var sCoins = coins.sorted
-      for (i <- 0 until sCoins.length) {
-        seqCnt(money, sCoins.slice(i, sCoins.length), sCoins(i))
+      for (i <- sCoins.indices) {
+        seqCnt(sCoins.slice(i, sCoins.length), sCoins(i))
       }
-      return count
+      count
     }
   }
