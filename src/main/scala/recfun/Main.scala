@@ -2,14 +2,14 @@ package recfun
 
 object Main {
   def main(args: Array[String]) {
-    println("Pascal's Triangle")
+/*    println("Pascal's Triangle")
     for (row <- 0 to 10) {
       for (col <- 0 to row)
         print(pascal(col, row) + " ")
       println()
     }
-    println("Counting Change")
-    print(countChange(3, List(2,3,1)))
+*/  println("Counting Change")
+    print(countChange(6, List(3,2,1)))
   }
 
   /**
@@ -37,18 +37,37 @@ object Main {
    * Exercise 3
    */
     def countChange(money: Int, coins: List[Int]): Int = {
-      def seqCnt(sDepth: Int, elem: List[Int], seqStr: String): Unit = {
-        if ((sDepth == 0) && (elem.isEmpty)) println(seqStr)
-        else if ((sDepth == 0) && (!elem.isEmpty)) {
-          println(seqStr + elem.head.toString)
-          seqCnt(sDepth+1, elem.tail, seqStr)
-        } else if ((sDepth > 0) && (!elem.isEmpty)){
-          seqCnt(sDepth-1, elem, seqStr + elem.head.toString)
-        } else {
-          println("sdepth > 0, but list empty")
+      var count:Int = 0
+      def sum(lst: List[Int]): Int = {
+        def sumF(l: List[Int], acc: Int): Int = {
+          if (l.isEmpty) acc
+          else sumF(l.tail, acc + l.head)
         }
+        sumF(lst, 0)
       }
-      seqCnt(coins.length-1, coins.sorted, "")
-      return 0
+      def seqCnt(money: Int, elem: List[Int], currSum: Int): Unit = {
+        println("--- New Iteration ---")
+        println("1) money: " + money + " elem: " + elem.toString() + " currSum: " + currSum + " count: " + count)
+        if (elem.isEmpty) {
+          count = count
+          println("-->> elem empty <<--")
+        }
+        else if (currSum == money) {
+          println("Count up!")
+          count = count + 1
+        }
+        else if (currSum < money) {
+          for (j <- 0 until elem.length) {
+            seqCnt(money, elem.slice(j, elem.length), currSum + elem(j))
+          }
+        }
+        println("--- End of Iteration --")
+      }
+      var sCoins = coins.sorted
+      for (i <- 0 until sCoins.length) {
+        println("choose:" + sCoins(i))
+        seqCnt(money, sCoins.slice(i, sCoins.length), sCoins(i))
+      }
+      return count
     }
   }
